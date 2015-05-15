@@ -1,0 +1,49 @@
+/*
+	NORMALIZES CSS
+
+	SUPPLEMENTAL CALIBRATION EXISTS IN SITESPECIFIC.CSS
+	Targets text highlighting and such (not required)
+*/
+
+html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, del, dfn, em, img, ins, kbd, q, samp, small, strong, b, i, dl, dt, dd, ol, ul, li, fieldset, form, label, table, tbody, tfoot, thead, tr, th, td, article, aside, footer, header, nav, section {
+	margin:0;
+	padding:0;
+	border:0;
+	outline:0;
+	font-size:100%;
+	vertical-align:baseline;
+	background:transparent;
+	font-weight:normal;
+}
+html {
+/*	background: #fff; */
+	color: rgba(255,255,255,1); 
+}
+
+* {
+	padding:0;
+	margin:0;
+}
+
+h1, h2, h3, h4, h5, h6, p  {
+	margin: 0;
+	padding: 0;
+/*	font-size: 12px;*/
+	cursor:text;
+}
+input {
+	border:0px none;
+	outline:none;
+}
+clear, .clear {
+	clear:both;
+	display:block;
+	height:0;width:0;
+}
+
+
+/*
+end of calibration.css
+*/
+
+
