@@ -342,7 +342,7 @@
 	PixelFlow.prototype.update = function( options ){
 
 		$.extend( this.options, options );
-
+		
 		this.options.resolution = evenNum(this.options.resolution);
 
 		this.drawPixels();
