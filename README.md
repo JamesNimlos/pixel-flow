@@ -14,7 +14,7 @@ The documentation also includes a write up of the build process and logic throug
 
 	// Runs animation on that same image to return to base image
 	// notice I'm now selecting a canvas object
-	$('canvas').first().PixelFlow('simpleanimate');
+	$('canvas').first().PixelFlow('simpleanimate', 0, 2000);
 
 	// You should use a reference since the element is not longer
 	// an img element but a canvas
