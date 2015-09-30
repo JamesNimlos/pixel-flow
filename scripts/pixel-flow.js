@@ -330,10 +330,11 @@
 
 	/**
 	 * Returns the canvas to display the original image
-	 * @param  {Object} options
 	 * @return {this}
 	 */
-	PixelFlow.prototype.rebase = function( options ) {
+	PixelFlow.prototype.rebase = function () {
+
+		this.options.resolution = 0;
 
 		this.ctx.drawImage( this.img, 0, 0 );
 
@@ -386,25 +387,39 @@
 		if(this.options.resolution === er) return;
 		var startRes = this.options.resolution;
 		var res = startRes;
-		var step = (startRes - er) / ( duration / delay );
+		var startTime = Date.now();
 		var elapsed = 0;
 		var dur = duration;
 
 		var PixelFlowAnimationLoop = function () {
-						
-			res -= step;
+
+			var time = Date.now();
+
+			res = startRes + (er - startRes) * ( ( time - startTime ) / duration );
+
+			res = evenNum(res);
+			console.log('res : ' + res);
 
 			if(res >= 2){
 
-				this.update({'resolution':evenNum(res)});
-				if(res > er) {
-					window.requestAnimationFrame( PixelFlowAnimationLoop );
+				// since we only run for even numbers this happens 
+				// during long animations
+				if(this.options.resolution !== res) {
+					console.debug('updated!')
+					this.update({'resolution':evenNum(res)});
 				}
 
 			} else {
 
 				this.rebase({});
 
+			}
+
+			if(
+					( er > startRes && res < er) ||
+					( er < startRes && res > er)
+				) {
+				window.requestAnimationFrame( PixelFlowAnimationLoop );
 			}
 
 		}.bind(this);
