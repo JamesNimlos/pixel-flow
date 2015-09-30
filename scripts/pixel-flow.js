@@ -1,18 +1,11 @@
 /*
-** Pixel Flow v0.1
+** Pixel Flow v0.2
 ** http://devnimlos.com/demos/PixelFlow/
+** https://github.com/JamesNimlos/pixel-flow
 **
 ** Developed by
 ** - James Nimlos http://devnimlos.com/
 **
-** Inspired by Close Pixelate {
-** 	Close Pixelate v2.0.00 beta
-** 	http://desandro.com/resources/close-pixelate/
-** 
-** 	Developed by
-** 	- David DeSandro  http://desandro.com
-** 	- John Schulz  http://twitter.com/jfsiii
-** }
 ** Licensed under MIT license
 */
 
@@ -30,6 +23,10 @@
 		return ~~num - ( ~~num % 2 );
 	};
 
+	var convPerc = function ( perc ) {
+		return Number(perc.replace(/[\s%]/g, '')) / 100;
+	};
+
 	// don't proceed if canvas is no supported
 	if ( !isCanvasSupported ) {
 	  return
@@ -43,9 +40,13 @@
 				offsetY : 0
 			};
 
-	function PixelFlow( img, options ) {
+	/**
+	 * @param {HTMLImageElement} img
+	 * @param {Object} [options] 
+	 */
+	function PixelFlow ( img, options ) {
 		if( !(img instanceof HTMLImageElement) ) 
-			return console.error( 'The provided element is not an HTMLImageElement.' );
+			return window.console && console.error( 'The provided element is not an HTMLImageElement.' );
 	  
 		this.options = $.extend( {}, defaults, options );
 
@@ -63,13 +64,30 @@
 
 	  } catch (err) {
 
-	  	console.log( 'PixelFlow could not not be created.' )
-	  	console.error( err );
+	  	window.console && console.error( 'PixelFlow could not not be created.' )
+	  	window.console && console.error( err );
 
 	  }
 	};
 
-	PixelFlow.prototype.drawCol = function( left, colWidth, pixHeight ) {
+	/**
+	 * Factory function
+	 * @param  {HTMLImageElement} img
+	 * @param  {Object} opts
+	 * @return {PixelFlow}
+	 */
+	PixelFlow.build = function ( img, opts ) {
+		return new PixelFlow( img, opts );
+	}
+
+	/**
+	 * Draws a full column on the canvas
+	 * @param  {number} left - pixel location of left side of column
+	 * @param  {number} colWidth - width of the column being drawn in pixels
+	 * @param  {number} [pixHeight] - height of each 'pixel' being drawn
+	 * @return {void}
+	 */
+	PixelFlow.prototype.drawCol = function ( left, colWidth, pixHeight ) {
 		if(colWidth <= 2 || pixHeight <= 2) return;
 		if(left + colWidth < 0) return;
 		//local variables
@@ -115,6 +133,15 @@
 		}
 	};
 
+	/**
+	 * Draws an individual block or 'pixel' on the canvas
+	 * @param  {number} pixelIndex - index of the pixel from the image data
+	 * @param  {number} x - horizontal position of the 'pixel' from left edge being 0
+	 * @param  {number} y - vertical position of the top left corner of the 'pixel' 
+	 * @param  {number} w - width of the 'pixel'
+	 * @param  {number} h - height of the 'pixel'
+	 * @return {this}
+	 */
 	PixelFlow.prototype.drawPixel = function( pixelIndex, x, y, w, h) {
 		var ctx = this.ctx
 			, imgData = this.imgData
@@ -124,12 +151,20 @@
     	, alpha = 1
     	, pixelAlpha = alpha * ( imgData[ pixelIndex + 3 ] / 255);
 
+    // sets the color using pixelIndex reference for the 'pixel'
     ctx.fillStyle = 'rgba(' + red +','+ green +','+ blue +','+ pixelAlpha + ')';
 
-    // square
+    // draws pixel
     ctx.fillRect( x, y, w, h );
+
+    return this;
 	};
 
+	/**
+	 * Draws the entire pixelation using the current settings on the 
+	 * PixelFlow instance. 'Pixel' size is constant throughout.
+	 * @return {this}
+	 */
 	PixelFlow.prototype.drawPixels = function() {
 		//local variables
 		var w = this.width
@@ -184,15 +219,33 @@
 
 		  } // col
 		} // row
+
+		return this;
 	};
 
+	/**
+	 * Draws a linear, vertical gradient using the provided options
+	 * Example options object:
+	 * var options = {
+	 * 		resolution : [ 32, 0 ],
+	 * 		location : [ 0, 0.25, 0.75, 1]
+	 * }
+	 * This will generate a gradient that starts at size 32 pixels on the left
+	 * and will be that size until 25% of the way through the image, then it will 
+	 * begin decreasing linearly until it should be normal resolution 
+	 * (anything less than 4) at or just after 75% of the way throught the image.
+	 * 
+	 * @param  {Object} options
+	 * @return {this}
+	 */
 	PixelFlow.prototype.linearGradient = function( options ) {
 
+		// TODO: create a better default system.
 		var options = $.extend({'location':[0,.25,.75,1],'resolution':[32,0],'rebase':true},options);
 
 		if(options.rebase) this.rebase();
 
-		if(options.location.length < 4 || options.resolution.length < 2) return console.error('You have not provided to necessary options for a linear gradient.');
+		if(options.location.length < 4 || options.resolution.length < 2) return window.console && console.error('You have not provided the necessary options for a linear gradient.');
 
 		var startRes = evenNum(options.resolution[0])
 			, endRes = evenNum(options.resolution[1])
@@ -202,8 +255,10 @@
 			, endPoint = options.location[3] || 1
 			, offsetX = this.offsetX || 0;
 
-
-		//TODO: handle percentages
+		if(typeof startPoint === 'string') startPoint = convPerc(startPoint);
+		if(typeof gradStart === 'string') gradStart = convPerc(gradStart);
+		if(typeof gradEnd === 'string') gradEnd = convPerc(gradEnd);
+		if(typeof endPoint === 'string') endPoint = convPerc(endPoint);
 
 		// calculate cols
 		var w = this.width
@@ -223,6 +278,8 @@
 		// gradStart -= (gradStart - startPoint) % startRes;
 		// gradEnd += endRes - (( endPoint - gradEnd ) % (endRes || 1));
 
+		// TODO: change this to a factory which could return an addColRange function
+		// using one of the different types between linear, exponential, bezier
 		function addColRange(arr, leftStart, startWidth, endWidth, rightEnd) {
 
 			if(rightEnd < leftStart) return;
@@ -267,14 +324,28 @@
 		for(var c = 1; c < cols.length; c++) {
 			this.drawCol( (cols[c - 1] + offsetX), ( cols[c] - cols[c-1] ) );
 		}
+
+		return this;
 	};
 
+	/**
+	 * Returns the canvas to display the original image
+	 * @param  {Object} options
+	 * @return {this}
+	 */
 	PixelFlow.prototype.rebase = function( options ) {
 
 		this.ctx.drawImage( this.img, 0, 0 );
 
+		return this;
 	};
 
+	/**
+	 * creates the canvas element and copies the image onto it
+	 * also creates a back-up canvas
+	 * @param {HTMLImageElement}
+	 * @return {this}
+	 */
 	PixelFlow.prototype.setUpCanvas = function(img) {
 		
 	  // create canvas
@@ -282,63 +353,72 @@
 	  this.ctx = canvas.getContext('2d');
 
 	  //make virtual duplicate for safe keeping of picture data
-	  this.copyCanvas = document.createElement('canvas');
-	  this.copyCtx = this.copyCanvas.getContext('2d');
+	  this._copyCanvas = document.createElement('canvas');
+	  this._copyCtx = this._copyCanvas.getContext('2d');
 
-	  // copy attributes from img to canvas
+	  // copy basic attributes from img to canvas
 	  canvas.className = img.className;
 	  canvas.id = img.id;
 
-	  var w = this.width = this.canvas.width = this.copyCanvas.width = (img.naturalWidth % 2 == 0) ? img.naturalWidth : img.naturalWidth - 1;
-	  var h = this.height = this.canvas.height  = this.copyCanvas.height = (img.naturalHeight % 2 == 0) ? img.naturalHeight : img.naturalHeight - 1;
+	  var w = this.width = this.canvas.width = this._copyCanvas.width = (img.naturalWidth % 2 == 0) ? img.naturalWidth : img.naturalWidth - 1;
+	  var h = this.height = this.canvas.height  = this._copyCanvas.height = (img.naturalHeight % 2 == 0) ? img.naturalHeight : img.naturalHeight - 1;
 
+	  // draw on both canvases
   	this.ctx.drawImage( img, 0, 0 );
-  	this.copyCtx.drawImage( img, 0, 0 );
+  	this._copyCtx.drawImage( img, 0, 0 );
 
-    this.imgData = this.copyCtx.getImageData( 0, 0, w, h ).data;
+    this.imgData = this._copyCtx.getImageData( 0, 0, w, h ).data;
 
     this.ctx.clearRect( 0, 0, w, h );
 
+    return this;
 	};
 
+	/**
+	 * @param  {number} endResolution - resolution to stop the animation at
+	 * @param  {number} duration - length of the animation
+	 * @return {this}
+	 */
 	PixelFlow.prototype.simpleanimate = function( endResolution, duration ) {
 
-		(function( pixelFlow, endRes, dr ){
+		var er = evenNum(endResolution);
+		// if end resolution is the same as the start then exit
+		if(this.options.resolution === er) return;
+		var startRes = this.options.resolution;
+		var res = startRes;
+		var step = (startRes - er) / ( duration / delay );
+		var elapsed = 0;
+		var dur = duration;
 
-			if(pixelFlow.options.resolution === endRes) return;
-			var startRes = pixelFlow.options.resolution;
-			var res = startRes;
-			var	delay = 100;
-			var step = (startRes - endRes) / ( dr / delay );
-			var elapsed = 0;
-			var er = endRes;
-			var dur = dr;
+		var PixelFlowAnimationLoop = function () {
+						
+			res -= step;
 
-			function PixelFlowAnimationLoop(){
-							
-				res -= step;
+			if(res >= 2){
 
-				if(res >= 2){
-
-					pixelFlow.update({'resolution':evenNum(res)});
-					if(res > endRes) {
-						setTimeout(PixelFlowAnimationLoop,delay);
-					}
-
-				} else {
-
-					pixelFlow.rebase({});
-
+				this.update({'resolution':evenNum(res)});
+				if(res > er) {
+					window.requestAnimationFrame( PixelFlowAnimationLoop );
 				}
+
+			} else {
+
+				this.rebase({});
 
 			}
 
-			setTimeout(PixelFlowAnimationLoop, delay);
-			
-		})(this, evenNum(endResolution), duration);
-		
+		}.bind(this);
+
+		window.requestAnimationFrame( PixelFlowAnimationLoop );
+
+		return this;
 	};
 
+	/**
+	 * updates the canvas with the new options for resolution
+	 * @param  {Object} options - options to update the canvas with
+	 * @return {this}
+	 */
 	PixelFlow.prototype.update = function( options ){
 
 		$.extend( this.options, options );
@@ -347,6 +427,7 @@
 
 		this.drawPixels();
 
+		return this;
 	};
 
 	$.fn[pluginName] = function () {
