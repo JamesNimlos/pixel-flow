@@ -12,12 +12,12 @@ The documentation also includes a write up of the build process and logic throug
 	// Converts the image to a pixelated image at 32 pixel resolution
 	var $pixel = $('img').first().PixelFlow({resolution : 32});
 
-	// Runs animation on that same image to return to base image
-	// notice I'm now selecting a canvas object
+	// Runs animation on that same image to return to base image.
+	// Notice I'm selecting the canvas that replaced the image.
 	$('canvas').first().PixelFlow('simpleanimate', 0, 2000);
 
-	// You should use a reference since the element is not longer
-	// an img element but a canvas
+	// You should use the original returned reference since the
+	// element is no longer an img element but a canvas
 	$pixel.PixelFlow('update', {resolution : 32});
 
 	// or you can access the instance directly by fetching it from 
