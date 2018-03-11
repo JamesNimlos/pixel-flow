@@ -8,13 +8,15 @@
   "license": "MIT",
   "private": false,
   "devDependencies": {
+    "@jamesnimlos/gh-pages": "^1.0.0",
     "http-server": "^0.11.1",
     "prettier": "^1.11.1"
   },
   "scripts": {
     "dev": "http-server ./public",
     "format": "prettier --write '{./**/,}*.{js,css,md}'",
-    "build:dev": "cp src/pixel-flow.js public/scripts/"
+    "build:dev": "cp src/pixel-flow.js public/scripts/",
+    "gh-pages": "yarn build:dev && gh-pages public"
   },
   "prettier": {
     "singleQuote": true
