@@ -1,10 +1,8 @@
 /*
-** Pixel Flow v0.2
-** http://devnimlos.com/demos/PixelFlow/
 ** https://github.com/JamesNimlos/pixel-flow
 **
 ** Developed by
-** - James Nimlos http://devnimlos.com/
+** - James Nimlos
 **
 ** Licensed under MIT license
 */
