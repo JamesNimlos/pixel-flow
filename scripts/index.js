@@ -39,35 +39,35 @@ var funcOpts = [
 
 // window.load to wait for images
 $(window).load(function() {
-  var $imgs = $(".img-wrapper img"),
+  var $imgs = $('.img-wrapper img'),
     resolution = 32,
     delay = 200;
 
   var $cvs = $imgs.PixelFlow({ resolution: 32 });
 
-  $(".btn-wrapper button").on("click", function(ev) {
+  $('.btn-wrapper button').on('click', function(ev) {
     var $btn = $(this),
-      func = $btn.attr("data-func"),
-      id = $btn.closest(".img-wrapper")[0].id.split("_")[1];
+      func = $btn.attr('data-func'),
+      id = $btn.closest('.img-wrapper')[0].id.split('_')[1];
 
-    if (func === "animateGradient")
+    if (func === 'animateGradient')
       return startGradientAnimation.call(this, ev);
-    if (func === "animateGradient_wave")
+    if (func === 'animateGradient_wave')
       return startWaveGradientAnimation.call(this, ev);
     $btn
-      .closest(".img-wrapper")
-      .find("canvas")
+      .closest('.img-wrapper')
+      .find('canvas')
       .PixelFlow(func, funcOpts[id][func] || {});
   });
 });
 
 function startGradientAnimation(ev) {
   var $btn = $(this),
-    id = $btn.closest(".img-wrapper")[0].id.split("_")[1],
+    id = $btn.closest('.img-wrapper')[0].id.split('_')[1],
     pixelFlow = $btn
-      .closest(".img-wrapper")
-      .find("canvas")
-      .data("plugin_PixelFlow");
+      .closest('.img-wrapper')
+      .find('canvas')
+      .data('plugin_PixelFlow');
 
   pixelFlow.offsetX = pixelFlow.width;
 
@@ -82,8 +82,8 @@ function startGradientAnimation(ev) {
       offsetX: 0,
       autoCSS: false,
       onUpdate: tick,
-      roundProps: "offsetX",
-      onUpdateParams: ["{self}", pixelFlow, id] // "{self}" is the tween instance
+      roundProps: 'offsetX',
+      onUpdateParams: ['{self}', pixelFlow, id] // "{self}" is the tween instance
     }
   );
 
@@ -94,11 +94,11 @@ function startGradientAnimation(ev) {
 
 function startWaveGradientAnimation() {
   var $btn = $(this),
-    id = $btn.closest(".img-wrapper")[0].id.split("_")[1],
+    id = $btn.closest('.img-wrapper')[0].id.split('_')[1],
     pixelFlow = $btn
-      .closest(".img-wrapper")
-      .find("canvas")
-      .data("plugin_PixelFlow");
+      .closest('.img-wrapper')
+      .find('canvas')
+      .data('plugin_PixelFlow');
 
   pixelFlow.offsetX = -pixelFlow.width;
 
@@ -115,8 +115,8 @@ function startWaveGradientAnimation() {
       onUpdate: tick,
       yoyo: true,
       repeat: 1,
-      roundProps: "offsetX",
-      onUpdateParams: ["{self}", pixelFlow, id] // "{self}" is the tween instance
+      roundProps: 'offsetX',
+      onUpdateParams: ['{self}', pixelFlow, id] // "{self}" is the tween instance
     }
   );
 

@@ -12,9 +12,10 @@
     "prettier": "^1.11.1"
   },
   "scripts": {
-    "dev": "http-server ./"
+    "dev": "http-server ./",
+    "format": "prettier --write '{./**/,}*.{js,css,md}'"
   },
-  "prettierConfig": {
+  "prettier": {
     "singleQuote": true
   }
 }

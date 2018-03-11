@@ -10,20 +10,20 @@
 */
 
 (function(window, document, $, undefined) {
-  "use strict";
+  'use strict';
 
   // utility functions
   var evenNum = function(num) {
-    if (typeof num !== "number") return NaN;
+    if (typeof num !== 'number') return NaN;
     return ~~num - ~~num % 2;
   };
 
   var convPerc = function(perc) {
-    return Number(perc.replace(/[\s%]/g, "")) / 100;
+    return Number(perc.replace(/[\s%]/g, '')) / 100;
   };
 
   //set up default options
-  var pluginName = "PixelFlow",
+  var pluginName = 'PixelFlow',
     defaults = {
       resolution: 16,
       offsetX: 0,
@@ -38,7 +38,7 @@
     if (!(img instanceof HTMLImageElement))
       return (
         window.console &&
-        console.error("The provided element is not an HTMLImageElement.")
+        console.error('The provided element is not an HTMLImageElement.')
       );
 
     this.options = $.extend({}, defaults, options);
@@ -53,9 +53,9 @@
       // replace image with canvas
       img.parentNode.replaceChild(this.canvas, img);
 
-      $.data(this.canvas, "plugin_" + pluginName, this);
+      $.data(this.canvas, 'plugin_' + pluginName, this);
     } catch (err) {
-      window.console && console.error("PixelFlow could not not be created.");
+      window.console && console.error('PixelFlow could not not be created.');
       window.console && console.error(err);
     }
   }
@@ -141,7 +141,7 @@
 
     // sets the color using pixelIndex reference for the 'pixel'
     ctx.fillStyle =
-      "rgba(" + red + "," + green + "," + blue + "," + pixelAlpha + ")";
+      'rgba(' + red + ',' + green + ',' + blue + ',' + pixelAlpha + ')';
 
     // draws pixel
     ctx.fillRect(x, y, w, h);
@@ -200,7 +200,7 @@
         pixelAlpha = alpha * (imgData[pixelIndex + 3] / 255);
 
         ctx.fillStyle =
-          "rgba(" + red + "," + green + "," + blue + "," + pixelAlpha + ")";
+          'rgba(' + red + ',' + green + ',' + blue + ',' + pixelAlpha + ')';
 
         // square
         ctx.fillRect(x - halfSize, y - halfSize, size, size);
@@ -238,7 +238,7 @@
       return (
         window.console &&
         console.error(
-          "You have not provided the necessary options for a linear gradient."
+          'You have not provided the necessary options for a linear gradient.'
         )
       );
 
@@ -250,10 +250,10 @@
       endPoint = options.location[3] || 1,
       offsetX = this.offsetX || 0;
 
-    if (typeof startPoint === "string") startPoint = convPerc(startPoint);
-    if (typeof gradStart === "string") gradStart = convPerc(gradStart);
-    if (typeof gradEnd === "string") gradEnd = convPerc(gradEnd);
-    if (typeof endPoint === "string") endPoint = convPerc(endPoint);
+    if (typeof startPoint === 'string') startPoint = convPerc(startPoint);
+    if (typeof gradStart === 'string') gradStart = convPerc(gradStart);
+    if (typeof gradEnd === 'string') gradEnd = convPerc(gradEnd);
+    if (typeof endPoint === 'string') endPoint = convPerc(endPoint);
 
     // calculate cols
     var w = this.width,
@@ -347,12 +347,12 @@
    */
   PixelFlow.prototype.setUpCanvas = function(img) {
     // create canvas
-    var canvas = (this.canvas = document.createElement("canvas"));
-    this.ctx = canvas.getContext("2d");
+    var canvas = (this.canvas = document.createElement('canvas'));
+    this.ctx = canvas.getContext('2d');
 
     //make virtual duplicate for safe keeping of picture data
-    this._copyCanvas = document.createElement("canvas");
-    this._copyCtx = this._copyCanvas.getContext("2d");
+    this._copyCanvas = document.createElement('canvas');
+    this._copyCtx = this._copyCanvas.getContext('2d');
 
     // copy basic attributes from img to canvas
     canvas.className = img.className;
@@ -395,13 +395,13 @@
       res = startRes + (er - startRes) * ((time - startTime) / duration);
 
       res = evenNum(res);
-      console.log("res : " + res);
+      console.log('res : ' + res);
 
       if (res >= 2) {
         // since we only run for even numbers this happens
         // during long animations
         if (this.options.resolution !== res) {
-          console.debug("updated!");
+          console.debug('updated!');
           this.update({ resolution: evenNum(res) });
         }
       } else {
@@ -438,21 +438,21 @@
       o = a[0],
       $cvs;
     this.each(function() {
-      var r = $.data(this, "plugin_" + pluginName);
+      var r = $.data(this, 'plugin_' + pluginName);
       if (!r) {
         r = new PixelFlow(this, o);
       } else {
-        if ("undefined" === typeof o) {
+        if ('undefined' === typeof o) {
           return $cvs.add(r.canvas);
-        } else if ("string" !== typeof o || !r[o]) {
+        } else if ('string' !== typeof o || !r[o]) {
           void jQuery.error(
-            "Method " + o + " does not exist on jQuery(el)." + pluginName
+            'Method ' + o + ' does not exist on jQuery(el).' + pluginName
           );
         } else {
           r[o].apply(r, [].slice.call(a, 1));
         }
       }
-      if (typeof $cvs === "undefined") $cvs = $(r.canvas);
+      if (typeof $cvs === 'undefined') $cvs = $(r.canvas);
       else $cvs.add(r.canvas);
     });
     return $cvs;

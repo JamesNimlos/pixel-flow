@@ -13,7 +13,7 @@ NEAR-WHITE  :   #F4F4F4     rgba(244, 244, 244, 1);
 WHITE       :   #FFFFFF     rgba(255, 255, 255, 1);
 */
 html {
-  font-family: "Raleway", sans-serif;
+  font-family: 'Raleway', sans-serif;
   font-size: 16px;
   color: #656565;
 }
@@ -24,7 +24,7 @@ h4,
 h5,
 h6 {
   font-weight: 400;
-  font-family: "Merriweather", serif;
+  font-family: 'Merriweather', serif;
 }
 h5 {
   font-size: 110%;
@@ -60,7 +60,7 @@ a:hover {
 /*clearAfter*/
 .clearAfter:after {
   clear: both;
-  content: "";
+  content: '';
   height: 0;
   display: block;
 }
@@ -92,7 +92,7 @@ button:hover:disabled,
 }
 
 #content {
-  font-family: "Raleway", sans-serif;
+  font-family: 'Raleway', sans-serif;
   font-weight: 300;
   max-width: 1024px;
   width: 90%;
