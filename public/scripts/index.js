@@ -39,11 +39,8 @@ var funcOpts = [
 
 // window.load to wait for images
 $(window).load(function() {
-  var $imgs = $('.img-wrapper img'),
-    resolution = 32,
-    delay = 200;
-
-  var $cvs = $imgs.PixelFlow({ resolution: 32 });
+  var $imgs = $('.img-wrapper img');
+  $imgs.PixelFlow({ resolution: 32 });
 
   $('.btn-wrapper button').on('click', function(ev) {
     var $btn = $(this),

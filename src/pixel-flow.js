@@ -7,7 +7,7 @@
 ** Licensed under MIT license
 */
 
-(function(window, document, $, undefined) {
+(function(window, document, $) {
   'use strict';
 
   // utility functions
@@ -79,30 +79,21 @@
     if (colWidth <= 2 || pixHeight <= 2) return;
     if (left + colWidth < 0) return;
     //local variables
-    var w = this.width,
-      h = this.height,
-      ctx = this.ctx,
-      imgData = this.imgData,
-      options = this.options,
-      res = colWidth,
-      resH = pixHeight || res,
-      size = options.size || res,
-      alpha = 1,
-      offsetX = options.offestX,
-      offsetY = options.offsetY,
-      rows = h / resH + 1,
-      halfSize = size / 2;
+    var w = this.width;
+    var h = this.height;
+    var options = this.options;
+    var res = colWidth;
+    var resH = pixHeight || res;
+    var offsetX = options.offestX;
+    var offsetY = options.offsetY;
+    var rows = h / resH + 1;
 
-    var row,
-      x = left || 0,
-      y,
-      pixelY,
-      pixelX,
-      pixelIndex,
-      red,
-      green,
-      blue,
-      pixelAlpha;
+    var row;
+    var x = left || 0;
+    var y;
+    var pixelY;
+    var pixelX;
+    var pixelIndex;
 
     if (x + res <= offsetX) return;
     // normalize y so shapes around edges get color
@@ -126,12 +117,12 @@
    * @param  {number} y - vertical position of the top left corner of the 'pixel'
    * @param  {number} w - width of the 'pixel'
    * @param  {number} h - height of the 'pixel'
-   * @return {this}
+   * @return {PixelFlow}
    */
   PixelFlow.prototype.drawPixel = function(pixelIndex, x, y, w, h) {
     var ctx = this.ctx,
       imgData = this.imgData,
-      red = imgData[pixelIndex + 0],
+      red = imgData[pixelIndex],
       green = imgData[pixelIndex + 1],
       blue = imgData[pixelIndex + 2],
       alpha = 1,
@@ -150,7 +141,7 @@
   /**
    * Draws the entire pixelation using the current settings on the
    * PixelFlow instance. 'Pixel' size is constant throughout.
-   * @return {this}
+   * @return {PixelFlow}
    */
   PixelFlow.prototype.drawPixels = function() {
     //local variables
@@ -221,24 +212,24 @@
    * (anything less than 4) at or just after 75% of the way throught the image.
    *
    * @param  {Object} options
-   * @return {this}
+   * @return {PixelFlow}
    */
   PixelFlow.prototype.linearGradient = function(options) {
     // TODO: create a better default system.
-    var options = $.extend(
+    options = $.extend(
       { location: [0, 0.25, 0.75, 1], resolution: [32, 0], rebase: true },
       options
     );
 
     if (options.rebase) this.rebase();
 
-    if (options.location.length < 4 || options.resolution.length < 2)
-      return (
-        window.console &&
-        console.error(
-          'You have not provided the necessary options for a linear gradient.'
-        )
+    if (options.location.length < 4 || options.resolution.length < 2) {
+      window.console &&
+      console.error(
+        'You have not provided the necessary options for a linear gradient.'
       );
+      return this;
+    }
 
     var startRes = evenNum(options.resolution[0]),
       endRes = evenNum(options.resolution[1]),
@@ -254,9 +245,7 @@
     if (typeof endPoint === 'string') endPoint = convPerc(endPoint);
 
     // calculate cols
-    var w = this.width,
-      h = this.height,
-      ctx = this.ctx;
+    var w = this.width;
 
     // points to pixels
     startPoint *= w;
@@ -327,7 +316,7 @@
 
   /**
    * Returns the canvas to display the original image
-   * @return {this}
+   * @return {PixelFlow}
    */
   PixelFlow.prototype.rebase = function() {
     this.options.resolution = 0;
@@ -340,8 +329,8 @@
   /**
    * creates the canvas element and copies the image onto it
    * also creates a back-up canvas
-   * @param {HTMLImageElement}
-   * @return {this}
+   * @param {HTMLImageElement} img
+   * @return {PixelFlow}
    */
   PixelFlow.prototype.setUpCanvas = function(img) {
     // create canvas
@@ -357,9 +346,9 @@
     canvas.id = img.id;
 
     var w = (this.width = this.canvas.width = this._copyCanvas.width =
-      img.naturalWidth % 2 == 0 ? img.naturalWidth : img.naturalWidth - 1);
+      img.naturalWidth % 2 === 0 ? img.naturalWidth : img.naturalWidth - 1);
     var h = (this.height = this.canvas.height = this._copyCanvas.height =
-      img.naturalHeight % 2 == 0 ? img.naturalHeight : img.naturalHeight - 1);
+      img.naturalHeight % 2 === 0 ? img.naturalHeight : img.naturalHeight - 1);
 
     // draw on both canvases
     this.ctx.drawImage(img, 0, 0);
@@ -375,7 +364,7 @@
   /**
    * @param  {number} endResolution - resolution to stop the animation at
    * @param  {number} duration - length of the animation
-   * @return {this}
+   * @return {PixelFlow}
    */
   PixelFlow.prototype.simpleanimate = function(endResolution, duration) {
     var er = evenNum(endResolution);
@@ -419,7 +408,7 @@
   /**
    * updates the canvas with the new options for resolution
    * @param  {Object} options - options to update the canvas with
-   * @return {this}
+   * @return {PixelFlow}
    */
   PixelFlow.prototype.update = function(options) {
     $.extend(this.options, options);
