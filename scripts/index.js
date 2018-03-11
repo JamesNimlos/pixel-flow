@@ -38,23 +38,25 @@ var funcOpts = [
 ];
 
 // window.load to wait for images
-$(window).load(function() {
+$(document).ready(function() {
   var $imgs = $('.img-wrapper img');
-  $imgs.PixelFlow({ resolution: 32 });
+  Promise.all($imgs.map(waitForImage)).then(function() {
+    $imgs.PixelFlow({ resolution: 32 });
 
-  $('.btn-wrapper button').on('click', function(ev) {
-    var $btn = $(this),
-      func = $btn.attr('data-func'),
-      id = $btn.closest('.img-wrapper')[0].id.split('_')[1];
+    $('.btn-wrapper button').on('click', function(ev) {
+      var $btn = $(this),
+        func = $btn.attr('data-func'),
+        id = $btn.closest('.img-wrapper')[0].id.split('_')[1];
 
-    if (func === 'animateGradient')
-      return startGradientAnimation.call(this, ev);
-    if (func === 'animateGradient_wave')
-      return startWaveGradientAnimation.call(this, ev);
-    $btn
-      .closest('.img-wrapper')
-      .find('canvas')
-      .PixelFlow(func, funcOpts[id][func] || {});
+      if (func === 'animateGradient')
+        return startGradientAnimation.call(this, ev);
+      if (func === 'animateGradient_wave')
+        return startWaveGradientAnimation.call(this, ev);
+      $btn
+        .closest('.img-wrapper')
+        .find('canvas')
+        .PixelFlow(func, funcOpts[id][func] || {});
+    });
   });
 });
 
@@ -121,4 +123,13 @@ function startWaveGradientAnimation() {
     pF.linearGradient(funcOpts[key].wg[0]);
     pF.linearGradient(funcOpts[key].wg[1]);
   }
+}
+
+function waitForImage(img) {
+  return new Promise(function (resolve, reject) {
+    var imgObj = new Image;
+    imgObj.onload = function() { resolve(); };
+    imgObj.onerror = function() { reject(); };
+    imgObj.src = img.src;
+  });
 }
