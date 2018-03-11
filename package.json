@@ -12,8 +12,9 @@
     "prettier": "^1.11.1"
   },
   "scripts": {
-    "dev": "http-server ./",
-    "format": "prettier --write '{./**/,}*.{js,css,md}'"
+    "dev": "http-server ./public",
+    "format": "prettier --write '{./**/,}*.{js,css,md}'",
+    "build:dev": "cp src/pixel-flow.js public/scripts/"
   },
   "prettier": {
     "singleQuote": true
