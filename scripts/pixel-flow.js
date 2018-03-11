@@ -12,10 +12,6 @@
 (function(window, document, $, undefined) {
   "use strict";
 
-  // check for canvas support
-  var canvas = document.createElement("canvas");
-  var isCanvasSupported = canvas.getContext && canvas.getContext("2d");
-
   // utility functions
   var evenNum = function(num) {
     if (typeof num !== "number") return NaN;
@@ -25,11 +21,6 @@
   var convPerc = function(perc) {
     return Number(perc.replace(/[\s%]/g, "")) / 100;
   };
-
-  // don't proceed if canvas is no supported
-  if (!isCanvasSupported) {
-    return;
-  }
 
   //set up default options
   var pluginName = "PixelFlow",
