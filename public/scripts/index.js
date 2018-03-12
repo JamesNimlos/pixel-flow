@@ -29,6 +29,7 @@ var funcOpts = [
   },
   {
     linearGradient: { location: [0, 0.5, 0.9, 1], resolution: [0, 32] },
+    drawPixels: { resolution: 32 },
     lg: { location: [0, 0.5, 0.9, 1], resolution: [0, 32] },
     wg: [
       { location: [0.85, 0.9, 1, 1], resolution: [16, 0] },
@@ -52,8 +53,10 @@ $(document).ready(function() {
 
       if (func === 'animateGradient')
         return startGradientAnimation.call(this, ev);
+
       if (func === 'animateGradient_wave')
         return startWaveGradientAnimation.call(this, ev);
+
       $btn
         .closest('.img-wrapper')
         .find('canvas')

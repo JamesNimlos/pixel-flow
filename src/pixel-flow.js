@@ -143,13 +143,13 @@
    * PixelFlow instance. 'Pixel' size is constant throughout.
    * @return {PixelFlow}
    */
-  PixelFlow.prototype.drawPixels = function() {
+  PixelFlow.prototype.drawPixels = function(options) {
     //local variables
+    options = $.extend(this.options, options);
     var w = this.width,
       h = this.height,
       ctx = this.ctx,
       imgData = this.imgData,
-      options = this.options,
       res = options.resolution,
       size = options.size || res,
       alpha = 1,
