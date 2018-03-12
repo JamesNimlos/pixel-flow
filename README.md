@@ -2,7 +2,7 @@
 
 an image pixelating filter jquery plugin
 
-#### [Demo](http://devnimlos.com/projects/PixelFlow/)
+#### [Demo](https://jamesnimlos.github.io/pixel-flow/)
 
 The demo uses Green Sock Tween in order to animate the pixelating effect, see the documentation for more information.
 
