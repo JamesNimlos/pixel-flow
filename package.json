@@ -1,6 +1,6 @@
 {
   "name": "pixel-flow",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "an image pixelating filter plugin",
   "main": "dist/pixel-flow.js",
   "repository": "https://github.com/JamesNimlos/pixel-flow.git",
