@@ -16,6 +16,7 @@
     "dev": "http-server ./public",
     "format": "prettier --write '{./**/,}*.{js,css,md}'",
     "build:dev": "cp src/pixel-flow.js public/scripts/",
+    "build": "cp src/pixel-flow.js dist/",
     "gh-pages": "yarn build:dev && gh-pages -u public"
   },
   "prettier": {
