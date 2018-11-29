@@ -41,9 +41,11 @@ var funcOpts = [
 // window.load to wait for images
 $(document).ready(function() {
   var $imgs = $('.img-wrapper img');
-  Promise.all($imgs.map(function(_, img) {
-    return waitForImage(img);
-  })).then(function() {
+  Promise.all(
+    $imgs.map(function(_, img) {
+      return waitForImage(img);
+    })
+  ).then(function() {
     $imgs.PixelFlow({ resolution: 32 });
 
     $('.btn-wrapper button').on('click', function(ev) {
@@ -131,10 +133,14 @@ function startWaveGradientAnimation() {
 }
 
 function waitForImage(img) {
-  return new Promise(function (resolve, reject) {
-    var imgObj = new Image;
-    imgObj.onload = function() { resolve(); };
-    imgObj.onerror = function() { reject(); };
+  return new Promise(function(resolve, reject) {
+    var imgObj = new Image();
+    imgObj.onload = function() {
+      resolve();
+    };
+    imgObj.onerror = function() {
+      reject();
+    };
     imgObj.src = img.src;
   });
 }
