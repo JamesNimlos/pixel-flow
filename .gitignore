@@ -1,7 +1,7 @@
 node_modules
 lib
 dist
-jquery.js
+jquery.js*
 public/scripts/pixel-flow.js
 # keep gh-pages from being committed in main
 gh-pages

@@ -1,5 +1,5 @@
 node_modules
 dist
 lib
-jquery.js
+jquery.js*
 gh-pages
