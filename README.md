@@ -1,4 +1,9 @@
 ![PixelFlow](./pixel-flow.gif)
+<br/>
+[![npm](https://img.shields.io/npm/l/pixel-flow.svg?maxAge=2592000)](https://www.npmjs.com/package/pixel-flow)
+[![npm](https://img.shields.io/npm/v/pixel-flow.svg?maxAge=2592000)](https://www.npmjs.com/package/pixel-flow)
+[![npm](https://img.shields.io/npm/dm/pixel-flow.svg?maxAge=2592000)](https://www.npmjs.com/package/pixel-flow)
+[![npm](https://img.shields.io/npm/dt/pixel-flow.svg?maxAge=2592000)](https://www.npmjs.com/package/pixel-flow)
 
 an image pixelating JavaScript library
 
