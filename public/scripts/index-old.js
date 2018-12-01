@@ -1,3 +1,6 @@
+import $ from 'jquery'
+import '../../src/jquery'
+
 // global variables
 var funcOpts = [
   {
@@ -36,34 +39,38 @@ var funcOpts = [
       { location: [0.7, 0.7, 0.85, 0.85], resolution: [0, 16], rebase: false }
     ]
   }
-];
+]
 
 // window.load to wait for images
 $(document).ready(function() {
-  var $imgs = $('.img-wrapper img');
-  Promise.all($imgs.map(function(_, img) {
-    return waitForImage(img);
-  })).then(function() {
-    $imgs.PixelFlow({ resolution: 32 });
+  var $imgs = $('.img-wrapper img')
+  Promise.all(
+    $imgs.map(function(_, img) {
+      return waitForImage(img)
+    })
+  ).then(function() {
+    $imgs.PixelFlow({ resolution: 32 })
 
     $('.btn-wrapper button').on('click', function(ev) {
       var $btn = $(this),
         func = $btn.attr('data-func'),
-        id = $btn.closest('.img-wrapper')[0].id.split('_')[1];
+        id = $btn.closest('.img-wrapper')[0].id.split('_')[1]
 
-      if (func === 'animateGradient')
-        return startGradientAnimation.call(this, ev);
+      if (func === 'animateGradient') {
+        return startGradientAnimation.call(this, ev)
+      }
 
-      if (func === 'animateGradient_wave')
-        return startWaveGradientAnimation.call(this, ev);
+      if (func === 'animateGradient_wave') {
+        return startWaveGradientAnimation.call(this, ev)
+      }
 
       $btn
         .closest('.img-wrapper')
         .find('canvas')
-        .PixelFlow(func, funcOpts[id][func] || {});
-    });
-  });
-});
+        .PixelFlow(func, $.extend({ offsetX }, funcOpts[id][func] || {}))
+    })
+  })
+})
 
 function startGradientAnimation(ev) {
   var $btn = $(this),
@@ -71,9 +78,9 @@ function startGradientAnimation(ev) {
     pixelFlow = $btn
       .closest('.img-wrapper')
       .find('canvas')
-      .data('plugin_PixelFlow');
+      .data('plugin_PixelFlow')
 
-  pixelFlow.offsetX = pixelFlow.width;
+  pixelFlow.offsetX = pixelFlow.width
 
   TweenMax.fromTo(
     pixelFlow,
@@ -89,10 +96,10 @@ function startGradientAnimation(ev) {
       roundProps: 'offsetX',
       onUpdateParams: ['{self}', pixelFlow, id] // "{self}" is the tween instance
     }
-  );
+  )
 
   function tick(tween, pF, key) {
-    pF.linearGradient(funcOpts[key].lg);
+    pF.linearGradient(funcOpts[key].lg)
   }
 }
 
@@ -102,9 +109,9 @@ function startWaveGradientAnimation() {
     pixelFlow = $btn
       .closest('.img-wrapper')
       .find('canvas')
-      .data('plugin_PixelFlow');
+      .data('plugin_PixelFlow')
 
-  pixelFlow.offsetX = -pixelFlow.width;
+  pixelFlow.offsetX = -pixelFlow.width
 
   TweenMax.fromTo(
     pixelFlow,
@@ -122,19 +129,23 @@ function startWaveGradientAnimation() {
       roundProps: 'offsetX',
       onUpdateParams: ['{self}', pixelFlow, id] // "{self}" is the tween instance
     }
-  );
+  )
 
   function tick(tween, pF, key) {
-    pF.linearGradient(funcOpts[key].wg[0]);
-    pF.linearGradient(funcOpts[key].wg[1]);
+    pF.linearGradient(funcOpts[key].wg[0])
+    pF.linearGradient(funcOpts[key].wg[1])
   }
 }
 
 function waitForImage(img) {
-  return new Promise(function (resolve, reject) {
-    var imgObj = new Image;
-    imgObj.onload = function() { resolve(); };
-    imgObj.onerror = function() { reject(); };
-    imgObj.src = img.src;
-  });
+  return new Promise(function(resolve, reject) {
+    var imgObj = new Image()
+    imgObj.onload = function() {
+      resolve(img)
+    }
+    imgObj.onerror = function() {
+      reject()
+    }
+    imgObj.src = img.src
+  })
 }
