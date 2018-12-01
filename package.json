@@ -23,11 +23,11 @@
     "rollup-plugin-sourcemaps": "^0.4.2"
   },
   "scripts": {
-    "dev": "parcel public/index.html public/jquery.html",
+    "dev": "parcel public/index.html public/jquery.html --public-url /pixel-flow/",
     "fmt": "prettier --write '{./**/,}*.{js,css,md,html}'",
     "build": "rollup --config",
     "clean": "rm -rf dist lib gh-pages .cache jquery.js jquery.js.map",
-    "build:demo": "parcel build public/index.html public/jquery.html",
+    "build:demo": "parcel build public/index.html public/jquery.html --public-url /pixel-flow/",
     "gh-pages": "yarn build:demo && gh-pages -u dist"
   },
   "prettier": {
