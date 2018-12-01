@@ -1,66 +1,75 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<title>PixelFlow</title>
-
-	<link href='//fonts.googleapis.com/css?family=Merriweather:400,700|Raleway:600,300' rel='stylesheet' type='text/css'>
-	<link rel="stylesheet" type="text/css" href="styles/calibration.css">
-	<link rel="stylesheet" type="text/css" href="styles/index.css">
-</head>
-<body>
-	<div id="content">
-		<div>
-			<h5>Demo page for PixelFlow.js</h5>
-			<p>A plugin utilizing a &lt;canvas/&gt; element to pixelate an image</p>
-			<p>
-				<a href="https://github.com/JamesNimlos/pixel-flow"
-				   title="navigate back to Github">Back to Github</a>
-			</p>
-		</div>
-		<div class="img-wrapper" id="exp_0">
-			<div class="btn-wrapper">
-				<button data-func="rebase">Re-base Image</button>
-				<button data-func="drawPixels">Pixelate</button>
-				<button data-func="linearGradient">Gradient Pixelation</button>
-				<button data-func="animateGradient">Gradient Animation</button>
-				<button data-func="animateGradient_wave">Wave Animation</button>
-			</div>
-			<img src="media/32.jpg" width="1024px" height="681px" />
-		</div>
-		<div class="img-wrapper" id="exp_1">
-			<div class="btn-wrapper">
-				<button data-func="rebase">Re-base Image</button>
-				<button data-func="drawPixels">Pixelate</button>
-				<button data-func="linearGradient">Gradient Pixelation</button>
-				<button data-func="animateGradient">Gradient Animation</button>
-				<button data-func="animateGradient_wave">Wave Animation</button>
-			</div>
-			<img src="media/51.jpg" width="721px" height="480px" />
-		</div>
-		<div class="img-wrapper" id="exp_2">
-			<div class="btn-wrapper">
-				<button data-func="rebase">Re-base Image</button>
-				<button data-func="drawPixels">Pixelate</button>
-				<button data-func="linearGradient">Gradient Pixelation</button>
-				<button data-func="animateGradient">Gradient Animation</button>
-				<button data-func="animateGradient_wave">Wave Animation</button>
-			</div>
-			<img src="media/66.jpg" width="1072px" height="716px" />
-		</div>
-		<div class="img-wrapper" id="exp_3">
-			<div class="btn-wrapper">
-				<button data-func="rebase">Re-base Image</button>
-				<button data-func="drawPixels">Pixelate</button>
-				<button data-func="linearGradient">Gradient Pixelation</button>
-				<button data-func="animateGradient">Gradient Animation</button>
-				<button data-func="animateGradient_wave">Wave Animation</button>
-			</div>
-			<img src="media/68.jpg" width="1072px" height="715px" />
-		</div>
-	</div>
-</body>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script type="text/javascript" src="scripts/pixel-flow.js"></script>
-<script type="text/javascript" src="scripts/index.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.16.1/TweenMax.min.js"></script>
+  <head>
+    <title>PixelFlow</title>
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link
+      href="//fonts.googleapis.com/css?family=Merriweather:400,700|Raleway:600,300"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link rel="stylesheet" type="text/css" href="styles/calibration.css" />
+    <link rel="stylesheet" type="text/css" href="styles/index.css" />
+  </head>
+  <body>
+    <div id="content">
+      <div>
+        <h5>Demo page for PixelFlow.js</h5>
+        <p>A plugin utilizing a &lt;canvas/&gt; element to pixelate an image</p>
+        <p><a href="./" title="navigate to main demo">view main demo</a></p>
+        <p>
+          <a
+            href="https://github.com/JamesNimlos/pixel-flow"
+            title="navigate back to Github"
+            >Back to Github</a
+          >
+        </p>
+      </div>
+      <div class="img-wrapper" id="exp_0">
+        <div class="btn-wrapper">
+          <button data-func="rebase">Re-base Image</button>
+          <button data-func="drawPixels">Pixelate</button>
+          <button data-func="linearGradient">Gradient Pixelation</button>
+          <button data-func="animateGradient">Gradient Animation</button>
+          <button data-func="animateGradient_wave">Wave Animation</button>
+        </div>
+        <img src="media/32.jpg" width="1024px" height="681px" />
+      </div>
+      <div class="img-wrapper" id="exp_1">
+        <div class="btn-wrapper">
+          <button data-func="rebase">Re-base Image</button>
+          <button data-func="drawPixels">Pixelate</button>
+          <button data-func="linearGradient">Gradient Pixelation</button>
+          <button data-func="animateGradient">Gradient Animation</button>
+          <button data-func="animateGradient_wave">Wave Animation</button>
+        </div>
+        <img src="media/51.jpg" width="721px" height="480px" />
+      </div>
+      <div class="img-wrapper" id="exp_2">
+        <div class="btn-wrapper">
+          <button data-func="rebase">Re-base Image</button>
+          <button data-func="drawPixels">Pixelate</button>
+          <button data-func="linearGradient">Gradient Pixelation</button>
+          <button data-func="animateGradient">Gradient Animation</button>
+          <button data-func="animateGradient_wave">Wave Animation</button>
+        </div>
+        <img src="media/66.jpg" width="1072px" height="716px" />
+      </div>
+      <div class="img-wrapper" id="exp_3">
+        <div class="btn-wrapper">
+          <button data-func="rebase">Re-base Image</button>
+          <button data-func="drawPixels">Pixelate</button>
+          <button data-func="linearGradient">Gradient Pixelation</button>
+          <button data-func="animateGradient">Gradient Animation</button>
+          <button data-func="animateGradient_wave">Wave Animation</button>
+        </div>
+        <img src="media/68.jpg" width="1072px" height="715px" />
+      </div>
+    </div>
+  </body>
+  <script type="text/javascript" src="scripts/index-old.js"></script>
+  <script
+    type="text/javascript"
+    src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.16.1/TweenMax.min.js"
+  ></script>
 </html>
