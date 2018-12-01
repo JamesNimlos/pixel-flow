@@ -4,6 +4,11 @@
   "description": "an image pixelating filter plugin",
   "main": "lib/pixel-flow.cjs.js",
   "module": "lib/pixel-flow.esm.js",
+  "files": [
+    "lib",
+    "jquery.js",
+    "jquery.js.map"
+  ],
   "repository": "https://github.com/JamesNimlos/pixel-flow.git",
   "author": "JamesNimlos <james@nimlos.com>",
   "license": "MIT",
