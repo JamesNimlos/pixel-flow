@@ -28,7 +28,7 @@
     "build": "rollup --config",
     "clean": "rm -rf dist lib gh-pages .cache jquery.js jquery.js.map",
     "build:demo": "parcel build public/index.html public/jquery.html",
-    "gh-pages": "yarn build:demo && gh-pages -u demo"
+    "gh-pages": "yarn build:demo && gh-pages -u dist"
   },
   "prettier": {
     "singleQuote": true,
