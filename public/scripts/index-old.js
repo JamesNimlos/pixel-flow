@@ -67,7 +67,7 @@ $(document).ready(function() {
       $btn
         .closest('.img-wrapper')
         .find('canvas')
-        .PixelFlow(func, $.extend({ offsetX }, funcOpts[id][func] || {}))
+        .PixelFlow(func, $.extend({ offsetX: 0 }, funcOpts[id][func] || {}))
     })
   })
 })
