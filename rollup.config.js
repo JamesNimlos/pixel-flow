@@ -47,6 +47,7 @@ export default [
         format: 'cjs',
         sourcemap: true,
         banner,
+        exports: 'auto',
       },
     ],
     plugins,
