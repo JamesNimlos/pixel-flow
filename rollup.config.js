@@ -26,12 +26,12 @@ export default [
         sourcemap: true,
         name: 'pixel-flow',
         globals: {
-          jquery: 'jQuery'
+          jquery: 'jQuery',
         },
-        banner
-      }
+        banner,
+      },
     ],
-    plugins
+    plugins,
   },
   {
     input: 'src/pixel-flow.js',
@@ -40,15 +40,15 @@ export default [
         file: pkg.module,
         format: 'es',
         sourcemap: true,
-        banner
+        banner,
       },
       {
         file: pkg.main,
         format: 'cjs',
         sourcemap: true,
-        banner
-      }
+        banner,
+      },
     ],
-    plugins
-  }
+    plugins,
+  },
 ]

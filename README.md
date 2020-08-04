@@ -29,13 +29,13 @@ npm install --save pixel-flow
 
 ```javascript
 let images = Array.from(document.querySelectorAll('img'))
-let pixelFlows = images.map(img => new PixelFlow(img, { resolution: 32 }))
+let pixelFlows = images.map((img) => new PixelFlow(img, { resolution: 32 }))
 // be aware, creating the pixelate images removes the images from the DOM
 
 // then you can manipulate individual PixelFlow instances
 // wait 5 seconds
 setTimeout(() => {
-  pixelFlows.forEach(pixelFlow => {
+  pixelFlows.forEach((pixelFlow) => {
     // animate the pixelated images back to normal over 2 seconds
     pixelFlow.simpleanimate(0, 2)
   })
@@ -56,15 +56,11 @@ npm install --save pixel-flow jquery
 import $ from 'jquery'
 import 'pixel-flow/jquery'
 // Converts the image to a pixelated image at 32 pixel resolution
-var $pixel = $('img')
-  .first()
-  .PixelFlow({ resolution: 32 })
+var $pixel = $('img').first().PixelFlow({ resolution: 32 })
 
 // Runs animation on that same image to return to base image.
 // Notice I'm selecting the canvas that replaced the image.
-$('canvas')
-  .first()
-  .PixelFlow('simpleanimate', 0, 2000)
+$('canvas').first().PixelFlow('simpleanimate', 0, 2000)
 
 // You should use the original returned reference since the
 // element is no longer an img element but a canvas
