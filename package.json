@@ -1,6 +1,6 @@
 {
   "name": "pixel-flow",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "an image pixelating filter plugin",
   "main": "lib/pixel-flow.cjs.js",
   "module": "lib/pixel-flow.esm.js",
